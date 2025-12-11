@@ -45,7 +45,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🌤️ Mi Clima App</h1>
+        <h1>☁️ Mi Clima App</h1>
         <p>Descubre el clima de cualquier ciudad</p>
         
         <div>
@@ -66,25 +66,25 @@
 
     <script>
         async function getClima(){
-    try{
-        const ciudad = document.getElementById("ciudadInput").value;
-        const respuesta = await fetch(`/api/weather/city/${ciudad}`);
-        const datoClima = await respuesta.json();
-        
-        // Mostrar todos los datos
-        document.getElementById("ciudad").textContent = datoClima.ciudad;
-        document.getElementById("temperatura").textContent = `🌡️ ${datoClima.temperatura}`;
-        document.getElementById("descripcion").textContent = datoClima.descripcion;
-        document.getElementById("humedad").textContent = `💧 Humedad: ${datoClima.humedad}`;
-        document.getElementById("viento").textContent = `🌬️ Viento: ${datoClima.viento}`;
-        
-        document.getElementById("resultadoClima").classList.remove("hidden");
-        
-    } catch(error) {
-        console.error("Error: ", error);
-        alert("Error obteniendo el clima. Intenta de nuevo.");
-    }
-}
+            try{
+                const ciudad = document.getElementById("ciudadInput").value;
+                const respuesta = await fetch(`/api/weather/city/${ciudad}`);
+                const datoClima = await respuesta.json();
+                
+                // Mostrar todos los datos (sin emojis especiales)
+                document.getElementById("ciudad").textContent = datoClima.ciudad;
+                document.getElementById("temperatura").textContent = `Temperatura: ${datoClima.temperatura}°C`;
+                document.getElementById("descripcion").textContent = datoClima.descripcion;
+                document.getElementById("humedad").textContent = `Humedad: ${datoClima.humedad}%`;
+                document.getElementById("viento").textContent = `Viento: ${datoClima.viento} km/h`;
+                
+                document.getElementById("resultadoClima").classList.remove("hidden");
+                
+            } catch(error) {
+                console.error("Error: ", error);
+                alert("Error obteniendo el clima. Intenta de nuevo.");
+            }
+        }
     </script>
 </body>
 </html>

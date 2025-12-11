@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clima App</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            text-align: center; 
+            background: url("clima.jpg");
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            padding: 50px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        input, button {
+            padding: 12px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: #00b894;
+            color: white;
+            cursor: pointer;
+        }
+        .weather-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌤️ Mi Clima App</h1>
+        <p>Descubre el clima de cualquier ciudad</p>
+        
+        <div>
+            <input type="text" id="ciudadInput" placeholder="Ej: Madrid, Tokyo, New York">
+            <button onclick="getClima()">Buscar Clima</button>
+        </div>
+        
+        <div id="resultadoClima" class="hidden">
+            <div class="weather-card">
+                <h2 id="ciudad"></h2>
+                <p id="temperatura"></p>
+                <p id="descripcion"></p>
+                <p id="humedad"></p>
+                <p id="viento"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getClima(){
+    try{
+        const ciudad = document.getElementById("ciudadInput").value;
+        const respuesta = await fetch(`/api/weather/city/${ciudad}`);
+        const datoClima = await respuesta.json();
+        
+        // Mostrar todos los datos
+        document.getElementById("ciudad").textContent = datoClima.ciudad;
+        document.getElementById("temperatura").textContent = `🌡️ ${datoClima.temperatura}`;
+        document.getElementById("descripcion").textContent = datoClima.descripcion;
+        document.getElementById("humedad").textContent = `💧 Humedad: ${datoClima.humedad}`;
+        document.getElementById("viento").textContent = `🌬️ Viento: ${datoClima.viento}`;
+        
+        document.getElementById("resultadoClima").classList.remove("hidden");
+        
+    } catch(error) {
+        console.error("Error: ", error);
+        alert("Error obteniendo el clima. Intenta de nuevo.");
+    }
+}
+    </script>
+</body>
+</html>
